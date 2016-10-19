@@ -1,17 +1,18 @@
 function validateForm(){
 	/* Escribe tú código aquí */
 	//antes de agregar los primeros span se deben borrar los viejos
-
+	
+	//se crea un elemento span y se agrega una clase error para que el ultimo span no se borre
 	var span = document.createElement("span");
 	span.setAttribute("class","error");
-	var spans = document.getElementsByClassName("error");
 
-	while(spans.length>0){
-		spans[0].parentNode.removeChild(spans[0]);
+	//busca todos los elementos con la clase error y guarda en variable spans
+	var spans = document.getElementsByClassName("error");
+	//
+	while(spans.length > 0){
+		spans[0].parentElement.removeChild(spans[0]);
 	}
 
-	
-	var regexLetras = /^[A-Z][a-z]*$/g;
 	var nombre = document.getElementById("name");
 	var apellido = document.getElementById("lastname");
 	var regexCorreo = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -24,7 +25,10 @@ function validateForm(){
 		span.innerHTML = "Debes ingresar nombre";
 		nombre.parentNode.appendChild(span);
 		return false;
-	}else if(!regexLetras.test(nombre.value)){
+	}
+
+
+	else if(!/^[ÑA-Z][ña-z]*$/g.test(nombre.value)){
 		span.innerHTML = "La primera letra debe ser mayúscula";
 		nombre.parentNode.appendChild(span);
 		return false;
@@ -35,19 +39,19 @@ function validateForm(){
 		apellido.parentNode.appendChild(span);
 		return false;
 	}
-	else if(!regexLetras.test(apellido.value)){
+	else if(!/^[ÑA-Z][ña-z]*$/g.test(apellido.value)){
 		span.innerHTML = "La primera letra debe ser mayúscula";
 		apellido.parentNode.appendChild(span);
 		return false;
 	}
 	//CORREO
 	if (correo.value == null || correo.value == "") {
-		span.innerHTML = "Debes ingresar un correo valido";
+		span.innerHTML = "Debes ingresar un correo válido";
 		correo.parentNode.appendChild(span);
 		return false;
 	}
 	else if (!regexCorreo.test(correo.value)){
-		span.innerHTML = "Debes ingresar un correo valido";
+		span.innerHTML = "Debes ingresar un correo válido";
 		correo.parentNode.appendChild(span);
 		return false;
 	}
