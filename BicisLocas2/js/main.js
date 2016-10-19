@@ -1,61 +1,74 @@
 function validateForm(){
 	/* Escribe tú código aquí */
-	var nombre = document.getElementById("name").value;
+	//antes de agregar los primeros span se deben borrar los viejos
+
+	var span = document.createElement("span");
+	span.setAttribute("class","error");
+	var spans = document.getElementsByClassName("error");
+
+	while(spans.length>0){
+		spans[0].parentNode.removeChild(spans[0]);
+	}
+
 	
-	if(nombre == null || nombre == ""){
-		var hermano = document.getElementById("name");
-		var texto = document.createTextNode("Ingresa nombre");
-		mostrarMensaje(hermano,texto);
+	var regexLetras = /^[A-Z][a-z]*$/g;
+	var nombre = document.getElementById("name");
+	var apellido = document.getElementById("lastname");
+	var regexCorreo = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	var correo = document.getElementById("input-email");
+	var contrasena = document.getElementById("input-password");
+	var tipoBici = document.getElementsByTagName("select")[0];
+	
+	//NOMBRE
+	if(nombre.value == null || nombre.value == ""){
+		span.innerHTML = "Debes ingresar nombre";
+		nombre.parentNode.appendChild(span);
+		return false;
+	}else if(!regexLetras.test(nombre.value)){
+		span.innerHTML = "La primera letra debe ser mayúscula";
+		nombre.parentNode.appendChild(span);
 		return false;
 	}
-	// else if(!/^[A-Z][a-z]*$/g.test(document.getElementById("name").value)){
-	// 	texto = document.createTextNode("Ingresa mayúscula");
-	// 	return false;
-	// }
-
-	// var apellido = document.getElementById("lastname").value;
-	// if (apellido == null || apellido == "") {
-	// 	alert("Tiene que escribir su apellido");
-	// 	return false;
-	// }
-	// else if(!/^[A-Z][a-z]*$/g.test(document.getElementById("name").value)){
-	// 	alert("La primera letra debe ser mayúscula");
-	// 	return false;
-	// }
-
-	// var correo = document.getElementById("input-email").value;
-	// if (correo == null || correo == "") {
-	// 	alert("Tiene que escribir su correo");
-	// 	return false;
-	// }
-	// else if (!(/\S+@\S+\.\S+/.test(correo))){
-	// 	alert("Escribe un correo válido");
-	// 	return false;
-	// }
-	// var contrasena = document.getElementById("input-password").value;
-	// if (contrasena == null || contrasena == "") {
-	// 	alert("Tiene que escribir su contraseña");
-	// 	return false;
-	// } else if (contrasena.length < 6) {
-	// 	alert("La contraseña debe tener al menos 6 caracteres");
-	// 	return false;
-	// } else if (contrasena == "password" || contrasena == "123456" || contrasena == "098754"){
-	// 	alert("No se puede utilizar esa contraseña");
-	// 	return false;
-	// }
-
-	// var tipoBici = document.getElementsByTagName("select")[0].selectedIndex;
-	// if( tipoBici == null || tipoBici == 0 ) {
-	// 	alert("Debe seleccionar una opción de la lista");
-	// 	return false;
-	// }
-
-}
-
-function mostrarMensaje (hermano,texto){
-	var mensaje = document.createElement("span");
-	var padreMensaje = hermano.parentNode;
-	padreMensaje.insertBefore(mensaje,hermano);
-	mensaje.appendChild(texto);
-	return mensaje;
+	//APELLIDO
+	if (apellido.value == null || apellido.value == "") {
+		span.innerHTML = "Debes ingresar apellido";
+		apellido.parentNode.appendChild(span);
+		return false;
+	}
+	else if(!regexLetras.test(apellido.value)){
+		span.innerHTML = "La primera letra debe ser mayúscula";
+		apellido.parentNode.appendChild(span);
+		return false;
+	}
+	//CORREO
+	if (correo.value == null || correo.value == "") {
+		span.innerHTML = "Debes ingresar un correo valido";
+		correo.parentNode.appendChild(span);
+		return false;
+	}
+	else if (!regexCorreo.test(correo.value)){
+		span.innerHTML = "Debes ingresar un correo valido";
+		correo.parentNode.appendChild(span);
+		return false;
+	}
+	//CONTRASEÑA
+	if (contrasena.value == null || contrasena.value == "") {
+		span.innerHTML = "Escribe una contraseña";
+		contrasena.parentNode.appendChild(span);
+		return false;
+	} else if (contrasena.value.length < 6) {
+		span.innerHTML = "La contraseña debe tener al menos 6 caracteres";
+		contrasena.parentNode.appendChild(span);
+		return false;
+	} else if (contrasena.value == "password" || contrasena.value == "123456" || contrasena == "098754"){
+		span.innerHTML = "No se puede utilizar esa contraseña";
+		contrasena.parentNode.appendChild(span);
+		return false;
+	}
+	//BICI
+	if( tipoBici.selectedIndex == null || tipoBici.selectedIndex == 0 ) {
+		span.innerHTML = "Debe seleccionar una opción de la lista";
+		tipoBici.parentNode.appendChild(span);
+		return false;
+	}
 }
